@@ -1,6 +1,6 @@
 {
   "name": "@screeps/mod-season2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Season 2 rules",
   "main": "src/index.js",
   "scripts": {
