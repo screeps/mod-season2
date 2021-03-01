@@ -71,7 +71,6 @@ module.exports = function(config) {
                     roomObjects[event.data.targetId] &&
                     roomObjects[event.data.targetId].user)
                 {
-                    console.log(`Symbol pickup in ${roomInfo._id}`);
                     roomInfo.symbols = roomInfo.symbols || {};
                     roomInfo.symbols[event.data.resourceType] = (roomInfo.symbols[event.data.resourceType] || 0) + event.data.amount;
                 }
