@@ -1,0 +1,27 @@
+{
+  "name": "@screeps/mod-season2",
+  "version": "1.0.0",
+  "description": "Season 2 rules",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/screeps/mod-season2.git"
+  },
+  "keywords": [
+    "screeps",
+    "mod"
+  ],
+  "screeps_mod": true,
+  "author": "Nikolay Kharitonov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/screeps/mod-season2/issues"
+  },
+  "homepage": "https://github.com/screeps/mod-season2#readme",
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
