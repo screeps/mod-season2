@@ -61,6 +61,23 @@ module.exports = function(config) {
                 roomInfo.active = true;
             }
         });
+
+        config.engine.on('processRoom', function(roomId, roomInfo, roomObjects, roomTerrain, gameTime, bulk, bulkUsers, eventLog) {
+            for(let event of eventLog) {
+                if((event.event == config.common.constants.EVENT_TRANSFER) &&
+                    roomObjects[event.objectId] &&
+                    (roomObjects[event.objectId].type == 'symbolContainer') &&
+                    event.data.targetId &&
+                    roomObjects[event.data.targetId] &&
+                    roomObjects[event.data.targetId].user)
+                {
+                    console.log(`Symbol pickup in ${roomInfo._id}`);
+                    roomInfo.symbols = roomInfo.symbols || {};
+                    roomInfo.symbols[event.data.resourceType] = (roomInfo.symbols[event.data.resourceType] || 0) + event.data.amount;
+                }
+            }
+        });
+
     }
 
     if(config.cronjobs) {

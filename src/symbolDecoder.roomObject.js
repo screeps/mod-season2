@@ -51,8 +51,8 @@ module.exports = function(config) {
             if(object.type == 'symbolDecoder') {
                 if(object.store[object.resourceType]) {
                     bulk.update(object, {store: {[object.resourceType]: 0}});
+                    roomInfo.active = true;
                 }
-                roomInfo.active = true;
             }
         });
         config.engine.on('processRoom', function(roomId, roomInfo, roomObjects, roomTerrain, gameTime, bulk, bulkUsers, eventLog) {
@@ -62,9 +62,14 @@ module.exports = function(config) {
                     (roomObjects[event.data.targetId].type == 'symbolDecoder') &&
                     (event.data.resourceType == roomObjects[event.data.targetId].resourceType)) {
                     const object = roomObjects[event.objectId];
+                    const decoder = roomObjects[event.data.targetId];
                     const controller = _.find(roomObjects, {type: 'controller'});
                     if(object && controller && controller.level) {
-                        bulkUsers.inc(object.user, `resources.symbols.${event.data.resourceType}`, event.data.amount);
+                        const symbols = event.data.amount;
+                        const decoded = symbols*config.common.constants.CONTROLLER_LEVEL_SCORE_MULTIPLIERS[controller.level];
+                        bulkUsers.inc(object.user, `resources.symbols.${event.data.resourceType}`, decoded);
+                        bulk.inc(decoder, `symbols.${object.user}`, symbols);
+                        bulk.inc(decoder, `decoded.${object.user}`, decoded);
                     }
                 }
             }
